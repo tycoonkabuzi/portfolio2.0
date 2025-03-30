@@ -1,12 +1,18 @@
+import { Route, Routes } from "react-router";
 import "./App.css";
+import Home from "./layouts/Home";
+import Portfolio from "./layouts/Portfolio";
 import Header from "./components/Header";
-import Nav from "./components/Nav";
 
 function App() {
   return (
     <>
-      <Nav />
-      <Header />
+      <Routes>
+        <Route path="/" element={<Home />}>
+          <Route path="/" element={<Header />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+        </Route>
+      </Routes>
     </>
   );
 }
