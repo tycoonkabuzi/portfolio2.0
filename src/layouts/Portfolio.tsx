@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,16 @@ import {
 } from "../StyleReusable/base";
 import FirstSite from "../ImagePhoto/site1.jpg";
 import secondSite from "../ImagePhoto/site2.jpg";
+const fadeInUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 const ContainerProjects = styled.div`
   display: flex;
   gap: 3%;
@@ -18,6 +28,15 @@ const ContainerProjects = styled.div`
   width: 90%;
 `;
 const Project = styled.div`
+  animation: ${fadeInUp} 1s ease-in-out
+    ${(props) =>
+      props.firsProject
+        ? "0.2s"
+        : props.secondProject
+        ? "0.3s"
+        : props.thirdProject
+        ? "0.4s"
+        : ""};
   background-color: #f0f0f0;
   width: 35%;
   padding: 20px;
@@ -56,12 +75,13 @@ const RoundButtons = styled.span`
   border-radius: 10px;
   border: 5px solid black;
 `;
+
 const Portfolio = () => {
   return (
     <Main>
       <BigTitle>Projects</BigTitle>
       <ContainerProjects>
-        <Project>
+        <Project firstProject={true}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
@@ -80,7 +100,7 @@ const Portfolio = () => {
           </ContainerCategoryProject>
         </Project>
 
-        <Project>
+        <Project secondProject={true}>
           <ContainerImage>
             <Image src={secondSite} />
           </ContainerImage>
@@ -97,7 +117,7 @@ const Portfolio = () => {
           </ContainerCategoryProject>
         </Project>
 
-        <Project>
+        <Project thirdProject={true}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
