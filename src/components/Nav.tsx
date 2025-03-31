@@ -104,7 +104,7 @@ const Nav = () => {
           isAnimated={isAnimated}
           onClick={animatedHamburgerMenu}
         >
-          <Item>Portfolio</Item>
+          <Item>Projects</Item>
         </StyledLink>
         <Item>Skills</Item>
         <Item>Contact</Item>

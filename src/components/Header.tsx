@@ -9,6 +9,7 @@ import {
 const Container = styled(Main)`
   display: flex;
   align-items: center;
+  margin-top: 150px;
 `;
 const QuotesHeader = styled.div`
   width: 35%;

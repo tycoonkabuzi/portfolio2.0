@@ -33,9 +33,9 @@ const Project = styled.div`
       props.firsProject
         ? "0.2s"
         : props.secondProject
-        ? "0.3s"
-        : props.thirdProject
         ? "0.4s"
+        : props.thirdProject
+        ? "0.6s"
         : ""};
   background-color: #f0f0f0;
   width: 35%;
