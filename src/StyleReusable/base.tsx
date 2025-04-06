@@ -46,6 +46,39 @@ const Paragraph = styled.p`
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
 `;
 
-const PartWrap = styled.div``;
-
-export { Main, BigTitle, Title, SubTitle, SmallTitle, Paragraph, PartWrap };
+const PartWrap = styled.div`
+  display: flex;
+  gap: 10%;
+`;
+const Box = styled.div`
+  animation: ${fadeInUp} 1s ease-in-out
+    ${(props) =>
+      props.firsProject
+        ? "0.2s"
+        : props.secondProject
+        ? "0.4s"
+        : props.thirdProject
+        ? "0.6s"
+        : ""};
+  background-color: #f0f0f0;
+  width: 70%;
+  padding: 20px;
+  border-radius: 20px;
+  transition: rotate 0.3s ease-in-out;
+  &:hover {
+    rotate: -5deg;
+    color: #e4e4e4;
+    background-color: #3f3f3f;
+    cursor: pointer;
+  }
+`;
+export {
+  Main,
+  BigTitle,
+  Title,
+  SubTitle,
+  SmallTitle,
+  Paragraph,
+  PartWrap,
+  Box,
+};

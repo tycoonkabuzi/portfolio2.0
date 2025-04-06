@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import "font-awesome/css/font-awesome.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon } from "@fortawesome/free-regular-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
-import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router";
 
@@ -72,6 +68,10 @@ const NavElements = styled.ul<{ isAnimated?: boolean }>`
 const Item = styled.li`
   font-size: 50px;
   list-style: none;
+  transition: font-weight 0.3s ease-in-out;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const StyledLink = styled(Link)<{ isAnimated?: boolean }>`
@@ -93,7 +93,7 @@ const Nav = () => {
           <LongLineHamburgerMenu second={true} isAnimated={isAnimated} />
           <ShortLineHamburgerMenu isAnimated={isAnimated} />
         </HamburgerMenu>
-        <FontAwesomeIcon icon={faMoon} size="2x" />
+        <Icon icon="line-md:moon-alt-loop" width="32" height="32" />
       </ContainerTopNav>
       <NavElements isAnimated={isAnimated}>
         <StyledLink to="/" onClick={animatedHamburgerMenu}>
@@ -106,15 +106,27 @@ const Nav = () => {
         >
           <Item>Projects</Item>
         </StyledLink>
-        <Item>Skills</Item>
-        <Item>Contact</Item>
+        <StyledLink
+          to="/skills"
+          isAnimated={isAnimated}
+          onClick={animatedHamburgerMenu}
+        >
+          <Item>Skills</Item>
+        </StyledLink>
+        <StyledLink
+          to="/skills"
+          isAnimated={isAnimated}
+          onClick={animatedHamburgerMenu}
+        >
+          <Item>Contact</Item>
+        </StyledLink>
       </NavElements>
       <MenuCarrousel isAnimated={isAnimated}>
-        <FontAwesomeIcon icon={faArrowUp} size="1x" />
+        <Icon icon="line-md:arrow-small-up" width="32" height="32" />
         <RoundButtons />
         <RoundButtons />
         <RoundButtons />
-        <FontAwesomeIcon icon={faArrowDown} size="1x" />
+        <Icon icon="line-md:arrow-small-down" width="32" height="32" />
       </MenuCarrousel>
     </Main>
   );

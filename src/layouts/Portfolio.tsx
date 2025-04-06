@@ -1,9 +1,8 @@
-import styled, { keyframes } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+import { Icon } from "@iconify/react";
 import {
   BigTitle,
+  Box,
   Main,
   Paragraph,
   SmallTitle,
@@ -11,36 +10,14 @@ import {
 } from "../StyleReusable/base";
 import FirstSite from "../ImagePhoto/site1.jpg";
 import secondSite from "../ImagePhoto/site2.jpg";
-const fadeInUp = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+
 const ContainerProjects = styled.div`
   display: flex;
   gap: 3%;
   align-items: center;
   width: 90%;
 `;
-const Project = styled.div`
-  animation: ${fadeInUp} 1s ease-in-out
-    ${(props) =>
-      props.firsProject
-        ? "0.2s"
-        : props.secondProject
-        ? "0.4s"
-        : props.thirdProject
-        ? "0.6s"
-        : ""};
-  background-color: #f0f0f0;
-  width: 35%;
-  padding: 20px;
-`;
+
 const ContainerImage = styled.div`
   width: 100%;
   margin: auto;
@@ -81,7 +58,7 @@ const Portfolio = () => {
     <Main>
       <BigTitle>Projects</BigTitle>
       <ContainerProjects>
-        <Project firstProject={true}>
+        <Box firstProject={true}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
@@ -98,9 +75,9 @@ const Portfolio = () => {
               <SmallTitle>01</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
-        </Project>
+        </Box>
 
-        <Project secondProject={true}>
+        <Box secondProject={true}>
           <ContainerImage>
             <Image src={secondSite} />
           </ContainerImage>
@@ -115,9 +92,9 @@ const Portfolio = () => {
               <SmallTitle>02</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
-        </Project>
+        </Box>
 
-        <Project thirdProject={true}>
+        <Box thirdProject={true}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
@@ -132,14 +109,14 @@ const Portfolio = () => {
               <SmallTitle>03</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
-        </Project>
+        </Box>
       </ContainerProjects>
       <MenuCarrousel>
-        <FontAwesomeIcon icon={faArrowLeft} size="1x" />
+        <Icon icon="line-md:arrow-small-left" width="32" height="32" />
         <RoundButtons />
         <RoundButtons />
         <RoundButtons />
-        <FontAwesomeIcon icon={faArrowRight} size="1x" />
+        <Icon icon="line-md:arrow-small-right" width="32" height="32" />
       </MenuCarrousel>
     </Main>
   );
