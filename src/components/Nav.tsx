@@ -114,7 +114,7 @@ const Nav = () => {
           <Item>Skills</Item>
         </StyledLink>
         <StyledLink
-          to="/skills"
+          to="/contact"
           isAnimated={isAnimated}
           onClick={animatedHamburgerMenu}
         >

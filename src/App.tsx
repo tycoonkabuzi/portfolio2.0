@@ -4,6 +4,7 @@ import Home from "./layouts/Home";
 import Portfolio from "./layouts/Portfolio";
 import Header from "./components/Header";
 import Skills from "./layouts/Skills";
+import Contact from "./layouts/Contact";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Header />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>
     </>

@@ -56,6 +56,8 @@ const Skills = () => {
               <Icon icon="cib:javascript" width="70" height="70" />
               <Icon icon="cib:typescript" width="70" height="70" />
               <Icon icon="cib:redux" width="70" height="70" />
+              <Icon icon="cib:sass" width="70" height="70" />
+              <Icon icon="cib:bootstrap" width="70" height="70" />
             </ContainerIcon>
           </Box>
           <Box>
