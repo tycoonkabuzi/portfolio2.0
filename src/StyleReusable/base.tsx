@@ -53,7 +53,7 @@ const PartWrap = styled.div`
 const Box = styled.div`
   animation: ${fadeInUp} 1s ease-in-out
     ${(props) =>
-      props.firsProject
+      props.firstProject
         ? "0.2s"
         : props.secondProject
         ? "0.4s"

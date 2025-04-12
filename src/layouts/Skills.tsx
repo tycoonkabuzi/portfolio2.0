@@ -62,7 +62,11 @@ const Skills = () => {
           </Box>
           <Box>
             <Title>Back-End</Title>
-            <ContainerIcon> Work in progress: still learning</ContainerIcon>
+            <ContainerIcon>
+              <Icon icon="cib:node-js" width="70" height="70" />
+              <Icon icon="skill-icons:expressjs-dark" width="70" height="70" />
+              <Icon icon="cib:mongodb" width="70" height="70" />
+            </ContainerIcon>
           </Box>
         </ContainerPartRight>
       </PartWrap>
