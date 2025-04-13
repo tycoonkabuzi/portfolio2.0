@@ -10,6 +10,7 @@ import {
 } from "../StyleReusable/base";
 import FirstSite from "../ImagePhoto/site1.jpg";
 import secondSite from "../ImagePhoto/site2.jpg";
+import { useTheme } from "../contexts/ThemeContext";
 
 const ContainerProjects = styled.div`
   display: flex;
@@ -54,59 +55,60 @@ const RoundButtons = styled.span`
 `;
 
 const Portfolio = () => {
+  const { theme } = useTheme();
   return (
-    <Main>
-      <BigTitle>Projects</BigTitle>
+    <Main theme={theme}>
+      <BigTitle theme={theme}>Projects</BigTitle>
       <ContainerProjects>
-        <Box firstProject={true}>
+        <Box firstProject={true} theme={theme}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
-          <SubTitle> Yoga site</SubTitle>
+          <SubTitle theme={theme}> Yoga site</SubTitle>
 
-          <Paragraph>
+          <Paragraph theme={theme}>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
             repellat aliquid veniam id odit eos quis asperiores, consequuntur.
           </Paragraph>
 
           <ContainerCategoryProject>
-            <SmallTitle>REACT/REDUX/API</SmallTitle>
+            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
             <ProjectNumber>
-              <SmallTitle>01</SmallTitle>
+              <SmallTitle theme={theme}>01</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
         </Box>
 
-        <Box secondProject={true}>
+        <Box secondProject={true} theme={theme}>
           <ContainerImage>
             <Image src={secondSite} />
           </ContainerImage>
-          <SubTitle> Yoga site</SubTitle>
-          <Paragraph>
+          <SubTitle theme={theme}> Yoga site</SubTitle>
+          <Paragraph theme={theme}>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
             repellat aliquid veniam id odit eos quis asperiores, consequuntur.
           </Paragraph>
           <ContainerCategoryProject>
-            <SmallTitle>REACT/REDUX/API</SmallTitle>
+            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
             <ProjectNumber>
-              <SmallTitle>02</SmallTitle>
+              <SmallTitle theme={theme}>02</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
         </Box>
 
-        <Box thirdProject={true}>
+        <Box thirdProject={true} theme={theme}>
           <ContainerImage>
             <Image src={FirstSite} />
           </ContainerImage>
-          <SubTitle> Yoga site</SubTitle>
-          <Paragraph>
+          <SubTitle theme={theme}> Yoga site</SubTitle>
+          <Paragraph theme={theme}>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
             repellat aliquid veniam id odit eos quis asperiores, consequuntur.
           </Paragraph>
           <ContainerCategoryProject>
-            <SmallTitle>REACT/REDUX/API</SmallTitle>
+            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
             <ProjectNumber>
-              <SmallTitle>03</SmallTitle>
+              <SmallTitle theme={theme}>03</SmallTitle>
             </ProjectNumber>
           </ContainerCategoryProject>
         </Box>

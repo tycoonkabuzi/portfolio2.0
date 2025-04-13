@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { Link } from "react-router";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Main = styled.div<{ isAnimated?: boolean }>`
   padding-top: 50px;
@@ -10,6 +11,8 @@ const Main = styled.div<{ isAnimated?: boolean }>`
   min-height: ${(props) => (props.isAnimated ? "100vh" : "0px")};
   max-height: ${(props) => (props.isAnimated ? "100vh" : "0px")};
   transition: min-height 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  background-color: ${(props) => props.theme["--bg-color"]};
+  color: ${(props) => props.theme["--text-color"]};
 `;
 const HamburgerMenu = styled.div`
   display: flex;
@@ -21,7 +24,8 @@ const LongLineHamburgerMenu = styled.span<{
   second?: boolean;
 }>`
   display: block;
-  background-color: #000000;
+  background-color: ${(props) => props.theme["--bg-color-nav-span"]};
+
   width: 25px;
   height: 3px;
   transition: 0.3s ease-in-out;
@@ -31,7 +35,7 @@ const LongLineHamburgerMenu = styled.span<{
 `;
 const ShortLineHamburgerMenu = styled.span<{ isAnimated?: boolean }>`
   display: block;
-  background-color: #000000;
+  background-color: ${(props) => props.theme["--bg-color-nav-span"]};
   width: 15px;
   height: 3px;
 
@@ -53,11 +57,10 @@ const MenuCarrousel = styled.div<{ isAnimated?: boolean }>`
 `;
 const RoundButtons = styled.span`
   display: block;
-  background-color: white;
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  border: 5px solid black;
+  border: 5px solid ${(props) => props.theme["--bg-color"]};
 `;
 const NavElements = styled.ul<{ isAnimated?: boolean }>`
   margin-top: 100px;
@@ -69,6 +72,7 @@ const Item = styled.li`
   font-size: 50px;
   list-style: none;
   transition: font-weight 0.3s ease-in-out;
+
   &:hover {
     font-weight: 600;
   }
@@ -77,32 +81,48 @@ const Item = styled.li`
 const StyledLink = styled(Link)<{ isAnimated?: boolean }>`
   text-decoration: none;
   color: inherit;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 const Nav = () => {
   const [isAnimated, setIsAnimated] = useState(false);
+  const { isDarkMode, theme, toggleTheme } = useTheme();
 
   const animatedHamburgerMenu = () => {
     setIsAnimated(!isAnimated);
   };
-  console.log(isAnimated);
+
   return (
-    <Main isAnimated={isAnimated}>
+    <Main isAnimated={isAnimated} theme={theme}>
       <ContainerTopNav>
-        <HamburgerMenu onClick={animatedHamburgerMenu}>
-          <LongLineHamburgerMenu isAnimated={isAnimated} />
-          <LongLineHamburgerMenu second={true} isAnimated={isAnimated} />
-          <ShortLineHamburgerMenu isAnimated={isAnimated} />
+        <HamburgerMenu onClick={animatedHamburgerMenu} theme={theme}>
+          <LongLineHamburgerMenu isAnimated={isAnimated} theme={theme} />
+          <LongLineHamburgerMenu
+            second={true}
+            isAnimated={isAnimated}
+            theme={theme}
+          />
+          <ShortLineHamburgerMenu isAnimated={isAnimated} theme={theme} />
         </HamburgerMenu>
-        <Icon icon="line-md:moon-alt-loop" width="32" height="32" />
+        <Icon
+          icon={
+            isDarkMode == false
+              ? "line-md:moon-filled-alt-to-sunny-filled-loop-transition"
+              : "line-md:moon-alt-loop"
+          }
+          width="32"
+          height="32"
+          onClick={toggleTheme}
+        />
       </ContainerTopNav>
       <NavElements isAnimated={isAnimated}>
-        <StyledLink to="/" onClick={animatedHamburgerMenu}>
+        <StyledLink to="/" onClick={animatedHamburgerMenu} theme={theme}>
           <Item>Home</Item>
         </StyledLink>
         <StyledLink
           to="/portfolio"
           isAnimated={isAnimated}
           onClick={animatedHamburgerMenu}
+          theme={theme}
         >
           <Item>Projects</Item>
         </StyledLink>
@@ -110,6 +130,7 @@ const Nav = () => {
           to="/skills"
           isAnimated={isAnimated}
           onClick={animatedHamburgerMenu}
+          theme={theme}
         >
           <Item>Skills</Item>
         </StyledLink>
@@ -117,6 +138,7 @@ const Nav = () => {
           to="/contact"
           isAnimated={isAnimated}
           onClick={animatedHamburgerMenu}
+          theme={theme}
         >
           <Item>Contact</Item>
         </StyledLink>

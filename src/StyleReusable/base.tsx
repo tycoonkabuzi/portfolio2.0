@@ -22,28 +22,33 @@ const BigTitle = styled.h1`
   font-size: 55px;
   padding-bottom: 50px;
   animation: ${fadeInUp} 1s ease-in-out;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 const Title = styled.h2`
   width: 100%;
   line-height: 40px;
   padding-bottom: 50px;
   animation: ${fadeInUp} 1s ease-in-out 0.2s;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 const SubTitle = styled.p`
   font-size: 15px;
   font-weight: 700;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 
 const SmallTitle = styled.p`
   font-size: 12px;
   font-weight: 700;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 
 const Paragraph = styled.p`
   font-size: 15px;
   margin-bottom: 20px;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 
 const PartWrap = styled.div`
@@ -60,15 +65,17 @@ const Box = styled.div`
         : props.thirdProject
         ? "0.6s"
         : ""};
-  background-color: #f0f0f0;
+
+  background-color: ${(props) => props.theme["--card-bg"]};
+  color: ${(props) => props.theme["--text-color"]};
   width: 70%;
   padding: 20px;
   border-radius: 20px;
   transition: rotate 0.3s ease-in-out;
   &:hover {
     rotate: -5deg;
-    color: #e4e4e4;
-    background-color: #3f3f3f;
+    color: ${(props) => props.theme["--text-color"]};
+    background-color: ${(props) => props.theme["--bg-color"]};
     cursor: pointer;
   }
 `;

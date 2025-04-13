@@ -10,6 +10,7 @@ import {
   SubTitle,
   Title,
 } from "../StyleReusable/base";
+import { useTheme } from "../contexts/ThemeContext";
 const ContainerPartLeft = styled.div`
   width: 45%;
 `;
@@ -27,16 +28,17 @@ const ContainerIcon = styled.div`
   gap: 20px;
 `;
 const Skills = () => {
+  const { theme } = useTheme();
   return (
-    <Main>
+    <Main theme={theme}>
       <PartWrap>
         <ContainerPartLeft>
-          <BigTitle> Skills</BigTitle>
-          <Title>
+          <BigTitle theme={theme}> Skills</BigTitle>
+          <Title theme={theme}>
             "Intellectual growth should commence at birth and cease only at
             death."
           </Title>
-          <Paragraph>
+          <Paragraph theme={theme}>
             I think of learning as a lifelong path. With time and dedication,
             any skill can be mastered. It is marked by the ongoing ability to
             change, to transform. With these skills, I as of now have, I remain
@@ -44,11 +46,11 @@ const Skills = () => {
             remarkable than on the other. On the other hand, I see myself as a
             work in progress
           </Paragraph>
-          <SubTitle> — Albert Einstein</SubTitle>
+          <SubTitle theme={theme}> — Albert Einstein</SubTitle>
         </ContainerPartLeft>
         <ContainerPartRight>
-          <Box>
-            <Title>Front-End</Title>
+          <Box theme={theme}>
+            <Title theme={theme}>Front-End</Title>
             <ContainerIcon>
               <Icon icon="cib:csswizardry" width="70" height="70" />
               <Icon icon="cib:html5" width="70" height="70" />
@@ -60,8 +62,8 @@ const Skills = () => {
               <Icon icon="cib:bootstrap" width="70" height="70" />
             </ContainerIcon>
           </Box>
-          <Box>
-            <Title>Back-End</Title>
+          <Box theme={theme}>
+            <Title theme={theme}>Back-End</Title>
             <ContainerIcon>
               <Icon icon="cib:node-js" width="70" height="70" />
               <Icon icon="skill-icons:expressjs-dark" width="70" height="70" />

@@ -6,10 +6,12 @@ import {
   SubTitle,
   Title,
 } from "../StyleReusable/base";
+import { useTheme } from "../contexts/ThemeContext";
 const Container = styled(Main)`
   display: flex;
   align-items: center;
   margin-top: 150px;
+  color: ${(props) => props.theme["--text-color"]};
 `;
 const QuotesHeader = styled.div`
   width: 35%;
@@ -29,8 +31,9 @@ const DetailedDescription = styled.div``;
 const PartWrap = styled.div``;
 
 const Header = () => {
+  const { theme } = useTheme();
   return (
-    <Container>
+    <Container theme={theme}>
       <QuotesHeader>
         <BigTitle>My Portfolio</BigTitle>
         <Title>
