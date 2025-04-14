@@ -41,14 +41,14 @@ const TextArea = styled.textarea`
   margin-bottom: 20px;
 `;
 const Submit = styled.button`
-  background-color: #3d4b83;
+  background-color: ${(props) => props.theme["--btn-color"]};
   padding: 10px 40px 10px 40px;
   border: none;
   border-radius: 10px;
   color: white;
-
   &:hover {
-    background-color: #4d5ea2;
+    background-color: ${(props) => props.theme["--btn-color-hover"]};
+    color: white;
   }
 `;
 
@@ -81,7 +81,7 @@ const Contact = () => {
           <Label>Message</Label>
           <TextArea placeholder="Type your message" />
 
-          <Submit>Send</Submit>
+          <Submit theme={theme}>Send</Submit>
         </ContactForm>
       </PartWrap>
     </Main>

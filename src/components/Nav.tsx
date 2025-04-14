@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { useTheme } from "../contexts/ThemeContext";
 
 const Main = styled.div<{ isAnimated?: boolean }>`
@@ -84,12 +84,15 @@ const StyledLink = styled(Link)<{ isAnimated?: boolean }>`
   color: ${(props) => props.theme["--text-color"]};
 `;
 const Nav = () => {
+  const location = useLocation();
   const [isAnimated, setIsAnimated] = useState(false);
   const { isDarkMode, theme, toggleTheme } = useTheme();
 
+  const pages = ["/", "/portfolio", "/skills", "/contact"];
   const animatedHamburgerMenu = () => {
     setIsAnimated(!isAnimated);
   };
+  const navigate = useNavigate();
 
   return (
     <Main isAnimated={isAnimated} theme={theme}>
@@ -144,11 +147,65 @@ const Nav = () => {
         </StyledLink>
       </NavElements>
       <MenuCarrousel isAnimated={isAnimated}>
-        <Icon icon="line-md:arrow-small-up" width="32" height="32" />
-        <RoundButtons />
-        <RoundButtons />
-        <RoundButtons />
-        <Icon icon="line-md:arrow-small-down" width="32" height="32" />
+        <Icon
+          icon="line-md:arrow-small-up"
+          width="32"
+          height="32"
+          onClick={() => {
+            const currentIndex = pages.indexOf(location.pathname);
+            const previousPage = pages[currentIndex - 1];
+
+            if (previousPage) {
+              navigate(previousPage);
+            }
+          }}
+        />
+        <RoundButtons
+          onClick={() => {
+            navigate("/");
+          }}
+          style={{
+            backgroundColor: location.pathname === "/" ? "red" : "",
+          }}
+        />
+        <RoundButtons
+          onClick={() => {
+            navigate("/portfolio");
+          }}
+          style={{
+            backgroundColor: location.pathname === "/portfolio" ? "red" : "",
+          }}
+        />
+        <RoundButtons
+          onClick={() => {
+            navigate("/skills");
+          }}
+          style={{
+            backgroundColor: location.pathname === "/skills" ? "red" : "",
+          }}
+        />
+        <RoundButtons
+          onClick={() => {
+            navigate("/contact");
+          }}
+          style={{
+            backgroundColor: location.pathname === "/contact" ? "red" : "",
+          }}
+        />
+
+        <Icon
+          icon="line-md:arrow-small-down"
+          width="32"
+          height="32"
+          onClick={() => {
+            const currentIndex = pages.indexOf(location.pathname);
+            const previousPage = pages[currentIndex + 1];
+
+            if (previousPage) {
+              navigate(previousPage);
+            }
+          }}
+        />
       </MenuCarrousel>
     </Main>
   );
