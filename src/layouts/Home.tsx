@@ -7,6 +7,12 @@ const Main = styled.div`
   min-height: 100vh;
   overflow-y: hidden;
   background-color: ${(props) => props.theme["--bg-color"]};
+  @media only screen and (max-width: 600px) {
+    overflow: scroll;
+  }
+  @media only screen and (min-width: 600px) {
+    overflow: scroll;
+  }
 `;
 const Home = () => {
   const { theme } = useTheme();

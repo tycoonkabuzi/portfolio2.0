@@ -13,12 +13,25 @@ import {
 import { useTheme } from "../contexts/ThemeContext";
 const ContainerPartLeft = styled.div`
   width: 45%;
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 90%;
+  }
 `;
+
 const ContainerPartRight = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
   width: 45%;
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 90%;
+  }
 `;
 const ContainerIcon = styled.div`
   width: 80%;

@@ -12,14 +12,51 @@ const Container = styled(Main)`
   align-items: center;
   margin-top: 150px;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+  }
+  @media only screen and (min-width: 600px) {
+    flex-direction: column;
+  }
+  @media only screen and (min-width: 992px) {
+    flex-direction: row;
+  }
+  @media only screen and (min-width: 1200px) {
+    flex-direction: row;
+  }
 `;
 const QuotesHeader = styled.div`
-  width: 35%;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 30%;
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 40%;
+  }
 `;
 
 const Description = styled.div`
   width: 50%;
   margin-top: 70px;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 50%;
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 40%;
+  }
 `;
 
 const Identification = styled.div`

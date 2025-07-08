@@ -17,6 +17,22 @@ const ContainerProjects = styled.div`
   gap: 3%;
   align-items: center;
   width: 90%;
+  overflow: hidden;
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    width: 90%;
+    padding: 20px;
+    margin: auto;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  @media only screen and (min-width: 992px) {
+    width: 90%;
+    flex-direction: row;
+  }
 `;
 
 const ContainerImage = styled.div`
@@ -39,7 +55,7 @@ const ProjectNumber = styled.div`
 const MenuCarrousel = styled.div`
   display: flex;
   gap: 10px;
-  width: 12%;
+  width: 15%;
   align-items: center;
   right: 11%;
   margin: auto;
@@ -58,7 +74,7 @@ const Portfolio = () => {
   const { theme } = useTheme();
   return (
     <Main theme={theme}>
-      <BigTitle theme={theme}>Projects</BigTitle>
+      <BigTitle theme={theme}>Projects </BigTitle>
       <ContainerProjects>
         <Box firstProject={true} theme={theme}>
           <ContainerImage>
@@ -78,7 +94,6 @@ const Portfolio = () => {
             </ProjectNumber>
           </ContainerCategoryProject>
         </Box>
-
         <Box secondProject={true} theme={theme}>
           <ContainerImage>
             <Image src={secondSite} />

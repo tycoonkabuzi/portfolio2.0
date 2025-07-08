@@ -54,6 +54,9 @@ const MenuCarrousel = styled.div<{ isAnimated?: boolean }>`
   position: absolute;
   right: 11%;
   bottom: 35%;
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 const RoundButtons = styled.span`
   display: block;

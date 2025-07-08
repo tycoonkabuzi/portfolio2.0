@@ -19,10 +19,18 @@ const Main = styled.div`
 `;
 
 const BigTitle = styled.h1`
-  font-size: 55px;
   padding-bottom: 50px;
   animation: ${fadeInUp} 1s ease-in-out;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    font-size: 70px;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 60px;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 50px;
+  }
 `;
 const Title = styled.h2`
   width: 100%;
@@ -30,30 +38,74 @@ const Title = styled.h2`
   padding-bottom: 50px;
   animation: ${fadeInUp} 1s ease-in-out 0.2s;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    font-size: 40px;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 50px;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 30px;
+  }
 `;
 const SubTitle = styled.p`
-  font-size: 15px;
   font-weight: 700;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    font-size: 40px;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 const SmallTitle = styled.p`
-  font-size: 12px;
   font-weight: 700;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    font-size: 14px;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 12px;
+  }
 `;
 
 const Paragraph = styled.p`
-  font-size: 15px;
   margin-bottom: 20px;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
   color: ${(props) => props.theme["--text-color"]};
+  @media only screen and (max-width: 600px) {
+    font-size: 20px;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+  }
+  @media only screen and (min-width: 1200px) {
+    font-size: 15px;
+  }
 `;
 
 const PartWrap = styled.div`
   display: flex;
   gap: 10%;
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 0;
+    margin: auto;
+  }
+  @media only screen and (min-width: 600px) {
+    flex-direction: column;
+  }
+  @media only screen and (min-width: 992px) {
+    flex-direction: row;
+  }
 `;
 const Box = styled.div`
   animation: ${fadeInUp} 1s ease-in-out
@@ -72,11 +124,21 @@ const Box = styled.div`
   padding: 20px;
   border-radius: 20px;
   transition: rotate 0.3s ease-in-out;
+  margin-bottom: 40px;
   &:hover {
     rotate: -5deg;
     color: ${(props) => props.theme["--text-color"]};
     background-color: ${(props) => props.theme["--bg-color"]};
     cursor: pointer;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 95%;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 50%;
   }
 `;
 export {

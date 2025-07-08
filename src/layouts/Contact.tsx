@@ -12,13 +12,29 @@ import { useTheme } from "../contexts/ThemeContext";
 
 const ContainerContactText = styled.div`
   width: 30%;
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 80%;
+  }
 `;
 const ContactForm = styled.form`
+  display: block;
   width: 40%;
   background-color: #f0f0f0;
   border-radius: 20px;
-  padding: 40px;
+  padding: 5%;
   margin-right: 100px;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 10px;
+    width: 100%;
+    margin: auto;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 80%;
+  }
 `;
 const Label = styled.label`
   font-size: 14px;
@@ -30,6 +46,9 @@ const Input = styled.input`
   border: 1px solid #cfcfcf;
   padding-left: 10px;
   margin-bottom: 10px;
+  @media only screen and (max-width: 600px) {
+    height: 40px;
+  }
 `;
 const TextArea = styled.textarea`
   width: 100%;
