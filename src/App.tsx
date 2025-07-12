@@ -6,7 +6,17 @@ import Header from "./components/Header";
 import Skills from "./layouts/Skills";
 import Contact from "./layouts/Contact";
 
+import { useState } from "react";
+import UploadProject from "./components/dashboard/UploadProject";
+import Dashboard from "./layouts/Dashboard";
+
 function App() {
+  const [active, setActive] = useState({
+    home: false,
+    project: true,
+    skills: false,
+    contact: false,
+  });
   return (
     <>
       <Routes>
@@ -15,6 +25,16 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/contact" element={<Contact />} />
+        </Route>
+
+        <Route
+          path="/admin"
+          element={<Dashboard active={active} setActive={setActive} />}
+        >
+          <Route
+            path="projects"
+            element={<UploadProject active={active} setActive={setActive} />}
+          />
         </Route>
       </Routes>
     </>
