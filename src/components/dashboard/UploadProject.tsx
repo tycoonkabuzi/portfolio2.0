@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 const Main = styled.div`
@@ -46,6 +47,15 @@ const Button = styled.button`
 `;
 const UploadProject = ({ active, setActive }) => {
   const location = useLocation();
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    type: "",
+    link: "",
+    image: "",
+  });
+
+  const [dataFromDataBase, setDataFromDataBase] = useState([]);
   const isActive = location.pathname.includes("project");
 
   useEffect(() => {
@@ -57,28 +67,83 @@ const UploadProject = ({ active, setActive }) => {
     }
   }, [location.pathname]);
 
+  const handleProjectForm = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    const files = e.target.files;
+    setFormData((prev) => {
+      if (name === "image") {
+        return { ...prev, [name]: files[0] };
+      } else {
+        return { ...prev, [name]: value };
+      }
+    });
+  };
+
+  const uploadProject = () => {
+    try {
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("type", formData.type);
+      data.append("link", formData.link);
+
+      if (formData.image) data.append("image", formData.image);
+
+      axios.post("http://localhost:8080/projects", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log("Information sent");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/projects");
+        setDataFromDataBase(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
   return (
     <Main>
       <ContainerUpload>
         <Title>Upload New Project</Title>
         <Form>
           <Label htmlFor="">Title: </Label>
-          <Input type="text" />
+          <Input type="text" name="title" onChange={handleProjectForm} />
           <Label htmlFor="">Description:</Label>
-          <Textarea />
+          <Textarea name="description" onChange={handleProjectForm} />
           <Label htmlFor="">Type:</Label>
-          <Select name="" id="">
+          <Select name="type" id="" onChange={handleProjectForm}>
             <Option value="">Web</Option>
             <Option value="">Js</Option>
           </Select>
 
           <Label htmlFor="">Link: </Label>
-          <Input type="text" />
+          <Input type="text" name="link" onChange={handleProjectForm} />
           <Label htmlFor="">Image:</Label>
 
-          <Input type="file" accept="image/*" />
+          <Input
+            type="file"
+            name="image"
+            onChange={handleProjectForm}
+            accept="image/*"
+          />
 
-          <Button>Submit</Button>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              uploadProject();
+            }}
+          >
+            Submit
+          </Button>
         </Form>
       </ContainerUpload>
       <ContainerUploaded>
@@ -93,57 +158,24 @@ const UploadProject = ({ active, setActive }) => {
               <th>Title</th>
               <th>Description</th>
               <th>Type</th>
-              <th>Image</th>
+              <th>Link</th>
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Restaurant 2.0</td>
-              <td>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In
-                odit possimus aliquam distinctio illo. Facilis iste doloremque
-                consequuntur itaque ipsum, architecto distinctio eos illum sint
-                vel animi ab, commodi quis.
-              </td>
-              <td>React,Js</td>
-              <td>No</td>
-              <td style={{ display: "flex" }}>
-                <button>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Rortfolio</td>
-              <td>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In
-                odit possimus aliquam distinctio illo. Facilis iste doloremque
-                consequuntur itaque ipsum, architecto distinctio eos illum sint
-                vel animi ab, commodi quis.
-              </td>
-              <td>React,Js, Express, Mongo DB</td>
-              <td>Yes</td>
-              <td style={{ display: "flex" }}>
-                <button>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Restaurant 2.0</td>
-              <td>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. In
-                odit possimus aliquam distinctio illo. Facilis iste doloremque
-                consequuntur itaque ipsum, architecto distinctio eos illum sint
-                vel animi ab, commodi quis.
-              </td>
-              <td>React,Js</td>
-              <td>Yes</td>
-              <td style={{ display: "flex" }}>
-                <button>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-          </tbody>
+          {dataFromDataBase.map((project) => (
+            <tbody>
+              <tr>
+                <td>{project.title}</td>
+                <td>{project.description}</td>
+                <td>{project.type}</td>
+                <td>{project.link}</td>
+                <td style={{ display: "flex" }}>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
         </table>
       </ContainerUploaded>
     </Main>
