@@ -9,8 +9,9 @@ import {
   SubTitle,
 } from "../StyleReusable/base";
 import FirstSite from "../ImagePhoto/site1.jpg";
-import secondSite from "../ImagePhoto/site2.jpg";
 import { useTheme } from "../contexts/ThemeContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ContainerProjects = styled.div`
   display: flex;
@@ -72,61 +73,40 @@ const RoundButtons = styled.span`
 
 const Portfolio = () => {
   const { theme } = useTheme();
+
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const getAllProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/projects/");
+        setProjects(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllProjects();
+  }, []);
+  console.log(projects);
   return (
     <Main theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>
       <ContainerProjects>
-        <Box firstProject={true} theme={theme}>
-          <ContainerImage>
-            <Image src={FirstSite} />
-          </ContainerImage>
-          <SubTitle theme={theme}> Yoga site</SubTitle>
-
-          <Paragraph theme={theme}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
-            repellat aliquid veniam id odit eos quis asperiores, consequuntur.
-          </Paragraph>
-
-          <ContainerCategoryProject>
-            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
-            <ProjectNumber>
-              <SmallTitle theme={theme}>01</SmallTitle>
-            </ProjectNumber>
-          </ContainerCategoryProject>
-        </Box>
-        <Box secondProject={true} theme={theme}>
-          <ContainerImage>
-            <Image src={secondSite} />
-          </ContainerImage>
-          <SubTitle theme={theme}> Yoga site</SubTitle>
-          <Paragraph theme={theme}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
-            repellat aliquid veniam id odit eos quis asperiores, consequuntur.
-          </Paragraph>
-          <ContainerCategoryProject>
-            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
-            <ProjectNumber>
-              <SmallTitle theme={theme}>02</SmallTitle>
-            </ProjectNumber>
-          </ContainerCategoryProject>
-        </Box>
-
-        <Box thirdProject={true} theme={theme}>
-          <ContainerImage>
-            <Image src={FirstSite} />
-          </ContainerImage>
-          <SubTitle theme={theme}> Yoga site</SubTitle>
-          <Paragraph theme={theme}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo
-            repellat aliquid veniam id odit eos quis asperiores, consequuntur.
-          </Paragraph>
-          <ContainerCategoryProject>
-            <SmallTitle theme={theme}>REACT/REDUX/API</SmallTitle>
-            <ProjectNumber>
-              <SmallTitle theme={theme}>03</SmallTitle>
-            </ProjectNumber>
-          </ContainerCategoryProject>
-        </Box>
+        {projects.map((project) => (
+          <Box theme={theme}>
+            <ContainerImage>
+              <Image src={`http://localhost:8080/uploads/${project.image}`} />
+            </ContainerImage>
+            <SubTitle theme={theme}> {project.title}</SubTitle>
+            <Paragraph theme={theme}>{project.description}</Paragraph>
+            <ContainerCategoryProject>
+              <SmallTitle theme={theme}>{project.type}</SmallTitle>
+              <ProjectNumber>
+                <SmallTitle theme={theme}>03</SmallTitle>
+              </ProjectNumber>
+            </ContainerCategoryProject>
+          </Box>
+        ))}
       </ContainerProjects>
       <MenuCarrousel>
         <Icon icon="line-md:arrow-small-left" width="32" height="32" />
