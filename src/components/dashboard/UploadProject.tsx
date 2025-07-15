@@ -45,6 +45,56 @@ const Button = styled.button`
   padding: 10px;
   margin-top: 40px;
 `;
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+`;
+
+const Thead = styled.thead`
+  background-color: #1f2937;
+  color: white;
+  text-align: left;
+`;
+
+const Th = styled.th`
+  padding: 12px 16px;
+`;
+
+const Td = styled.td`
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+`;
+
+const Tr = styled.tr`
+  &:hover {
+    background-color: #f9fafb;
+    transition: background 0.2s ease-in-out;
+  }
+`;
+
+const ActionButton = styled.button`
+  background-color: #b73f3f;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 13px;
+
+  &:hover {
+    background-color: darkred;
+  }
+`;
+
 const UploadProject = ({ active, setActive }) => {
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -152,31 +202,31 @@ const UploadProject = ({ active, setActive }) => {
 
         <br />
 
-        <table border="1" cellspacing="0" cellpadding="8">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Type</th>
-              <th>Link</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        <StyledTable border="1" cellspacing="0" cellpadding="8">
+          <Thead>
+            <Tr>
+              <Th>Title</Th>
+              <Th>Description</Th>
+              <Th>Type</Th>
+              <Th>Link</Th>
+              <Th>Action</Th>
+            </Tr>
+          </Thead>
           {dataFromDataBase.map((project) => (
             <tbody>
-              <tr>
-                <td>{project.title}</td>
-                <td>{project.description}</td>
-                <td>{project.type}</td>
-                <td>{project.link}</td>
-                <td style={{ display: "flex" }}>
+              <Tr>
+                <Td>{project.title}</Td>
+                <Td>{project.description}</Td>
+                <Td>{project.type}</Td>
+                <Td>{project.link}</Td>
+                <Td style={{ display: "flex" }}>
                   <button>Edit</button>
                   <button>Delete</button>
-                </td>
-              </tr>
+                </Td>
+              </Tr>
             </tbody>
           ))}
-        </table>
+        </StyledTable>
       </ContainerUploaded>
     </Main>
   );

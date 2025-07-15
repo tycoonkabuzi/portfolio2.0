@@ -8,7 +8,7 @@ import {
   SmallTitle,
   SubTitle,
 } from "../StyleReusable/base";
-import FirstSite from "../ImagePhoto/site1.jpg";
+
 import { useTheme } from "../contexts/ThemeContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -92,7 +92,7 @@ const Portfolio = () => {
     <Main theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>
       <ContainerProjects>
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <Box theme={theme}>
             <ContainerImage>
               <Image src={`http://localhost:8080/uploads/${project.image}`} />
@@ -102,7 +102,7 @@ const Portfolio = () => {
             <ContainerCategoryProject>
               <SmallTitle theme={theme}>{project.type}</SmallTitle>
               <ProjectNumber>
-                <SmallTitle theme={theme}>03</SmallTitle>
+                <SmallTitle theme={theme}>{index + 1}</SmallTitle>
               </ProjectNumber>
             </ContainerCategoryProject>
           </Box>
