@@ -160,6 +160,17 @@ const UploadProject = ({ active, setActive }) => {
     };
     getData();
   }, []);
+
+  const deleteProject = async (projectId, projectPicture) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/projects/${projectId}/${projectPicture}`
+      );
+      console.log("deleted successfully");
+    } catch (error) {
+      console.log("Something happen when trying to delete" + error);
+    }
+  };
   return (
     <Main>
       <ContainerUpload>
@@ -171,8 +182,11 @@ const UploadProject = ({ active, setActive }) => {
           <Textarea name="description" onChange={handleProjectForm} />
           <Label htmlFor="">Type:</Label>
           <Select name="type" id="" onChange={handleProjectForm}>
-            <Option value="">Web</Option>
-            <Option value="">Js</Option>
+            <Option value="React + typescript + styled-components + Express + MongoDB ">
+              React+ typescript + styled-components+ Express+ MongoDB
+            </Option>
+            <Option value="HTML + css + Js">HTML + css + Js</Option>
+            <Option value="React + Sass ">React + Sass</Option>
           </Select>
 
           <Label htmlFor="">Link: </Label>
@@ -202,31 +216,40 @@ const UploadProject = ({ active, setActive }) => {
 
         <br />
 
-        <StyledTable border="1" cellspacing="0" cellpadding="8">
-          <Thead>
-            <Tr>
-              <Th>Title</Th>
-              <Th>Description</Th>
-              <Th>Type</Th>
-              <Th>Link</Th>
-              <Th>Action</Th>
-            </Tr>
-          </Thead>
-          {dataFromDataBase.map((project) => (
-            <tbody>
+        {dataFromDataBase.length !== 0 ? (
+          <StyledTable border="1" cellspacing="0" cellpadding="8">
+            <Thead>
               <Tr>
-                <Td>{project.title}</Td>
-                <Td>{project.description}</Td>
-                <Td>{project.type}</Td>
-                <Td>{project.link}</Td>
-                <Td style={{ display: "flex" }}>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </Td>
+                <Th>Title</Th>
+                <Th>Description</Th>
+                <Th>Type</Th>
+                <Th>Link</Th>
+                <Th>Action</Th>
               </Tr>
-            </tbody>
-          ))}
-        </StyledTable>
+            </Thead>
+
+            {dataFromDataBase.map((project) => (
+              <tbody>
+                <Tr>
+                  <Td>{project.title}</Td>
+                  <Td>{project.description}</Td>
+                  <Td>{project.type}</Td>
+                  <Td>{project.link}</Td>
+                  <Td style={{ display: "flex" }}>
+                    <button>Edit</button>
+                    <button
+                      onClick={() => deleteProject(project._id, project.image)}
+                    >
+                      Delete
+                    </button>
+                  </Td>
+                </Tr>
+              </tbody>
+            ))}
+          </StyledTable>
+        ) : (
+          <p> No project uploaded yet</p>
+        )}
       </ContainerUploaded>
     </Main>
   );

@@ -10,14 +10,15 @@ import {
 } from "../StyleReusable/base";
 
 import { useTheme } from "../contexts/ThemeContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router";
 
 const ContainerProjects = styled.div`
   display: flex;
   gap: 3%;
   align-items: center;
-  width: 90%;
+
   overflow: hidden;
   @media only screen and (max-width: 600px) {
     flex-direction: column;
@@ -31,8 +32,6 @@ const ContainerProjects = styled.div`
   }
 
   @media only screen and (min-width: 992px) {
-    width: 90%;
-    flex-direction: row;
   }
 `;
 
@@ -41,6 +40,10 @@ const ContainerImage = styled.div`
   margin: auto;
   padding-bottom: 20px;
 `;
+const BoxProject = styled(Box)`
+  flex: 0 0 28.5%;
+`;
+
 const Image = styled.img`
   width: 100%;
 `;
@@ -70,6 +73,16 @@ const RoundButtons = styled.span`
   border-radius: 10px;
   border: 5px solid black;
 `;
+const ContainerItem = styled.div`
+  width: fit-content;
+  display: flex;
+  margin: auto;
+  gap: 1%;
+  transition: transform 0.3s ease;
+`;
+const LinkElement = styled(Link)`
+  text-decoration: none;
+`;
 
 const Portfolio = () => {
   const { theme } = useTheme();
@@ -87,33 +100,66 @@ const Portfolio = () => {
     };
     getAllProjects();
   }, []);
-  console.log(projects);
+  const containerRef = useRef(null);
+  const itemWidth = 100;
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    const moveCarousel = () => {
+      if (containerRef.current) {
+        containerRef.current.style.transform = `translateX(-${
+          count * itemWidth
+        }%)`;
+      }
+    };
+
+    moveCarousel();
+  }, [count]);
   return (
     <Main theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>
       <ContainerProjects>
-        {projects.map((project, index) => (
-          <Box theme={theme}>
-            <ContainerImage>
-              <Image src={`http://localhost:8080/uploads/${project.image}`} />
-            </ContainerImage>
-            <SubTitle theme={theme}> {project.title}</SubTitle>
-            <Paragraph theme={theme}>{project.description}</Paragraph>
-            <ContainerCategoryProject>
-              <SmallTitle theme={theme}>{project.type}</SmallTitle>
-              <ProjectNumber>
-                <SmallTitle theme={theme}>{index + 1}</SmallTitle>
-              </ProjectNumber>
-            </ContainerCategoryProject>
-          </Box>
-        ))}
+        <ContainerItem ref={containerRef}>
+          {projects.map((project, index) => (
+            <BoxProject theme={theme}>
+              <LinkElement to={`${project.link}`}>
+                <ContainerImage>
+                  <Image
+                    src={`http://localhost:8080/uploads/${project.image}`}
+                  />
+                </ContainerImage>
+                <SubTitle theme={theme}> {project.title}</SubTitle>
+                <Paragraph theme={theme}>{project.description}</Paragraph>
+                <ContainerCategoryProject>
+                  <SmallTitle theme={theme}>{project.type}</SmallTitle>
+                  <ProjectNumber>
+                    <SmallTitle theme={theme}>{index + 1}</SmallTitle>
+                  </ProjectNumber>
+                </ContainerCategoryProject>
+              </LinkElement>
+            </BoxProject>
+          ))}
+        </ContainerItem>
       </ContainerProjects>
       <MenuCarrousel>
-        <Icon icon="line-md:arrow-small-left" width="32" height="32" />
+        <Icon
+          icon="line-md:arrow-small-left"
+          width="32"
+          height="32"
+          onClick={() => {
+            setCount(count - 1);
+          }}
+        />
         <RoundButtons />
         <RoundButtons />
         <RoundButtons />
-        <Icon icon="line-md:arrow-small-right" width="32" height="32" />
+        <Icon
+          icon="line-md:arrow-small-right"
+          width="32"
+          height="32"
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        />
       </MenuCarrousel>
     </Main>
   );
