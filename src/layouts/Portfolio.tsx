@@ -12,7 +12,8 @@ import {
 import { useTheme } from "../contexts/ThemeContext";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
+const MainPortfolio = styled(Main)``;
 
 const ContainerProjects = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const ContainerProjects = styled.div`
   align-items: center;
 
   overflow: hidden;
+
   @media only screen and (max-width: 600px) {
     flex-direction: column;
     width: 90%;
@@ -115,7 +117,7 @@ const Portfolio = () => {
     moveCarousel();
   }, [count]);
   return (
-    <Main theme={theme}>
+    <MainPortfolio theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>
       <ContainerProjects>
         <ContainerItem ref={containerRef}>
@@ -161,7 +163,7 @@ const Portfolio = () => {
           }}
         />
       </MenuCarrousel>
-    </Main>
+    </MainPortfolio>
   );
 };
 

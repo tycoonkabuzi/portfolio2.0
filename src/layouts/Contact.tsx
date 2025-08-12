@@ -1,6 +1,7 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   BigTitle,
+  ErrorMessage,
   Main,
   Paragraph,
   PartWrap,
@@ -9,6 +10,7 @@ import {
   Title,
 } from "../StyleReusable/base";
 import { useTheme } from "../contexts/ThemeContext";
+import { useState } from "react";
 
 const ContainerContactText = styled.div`
   width: 30%;
@@ -73,7 +75,46 @@ const Submit = styled.button`
 
 const Contact = () => {
   const { theme } = useTheme();
+  const [contactData, setContactData] = useState({
+    name: "",
+    email: "",
+  });
+  const [validationMessage, setValidationMessage] = useState({
+    name: "",
+    email: "",
+  });
 
+  const handleForm = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    const hasNumberOrSpecialChar = /[^a-zA-ZÀ-ž\s]/;
+    setContactData((prev) => ({ ...prev, [name]: value }));
+
+    if (contactData.email !== "" && !contactData.email.includes("@")) {
+      setValidationMessage((prev) => ({
+        ...prev,
+        email: "Your email should contain @",
+      }));
+      console.log();
+    } else if (contactData.email !== "" && !contactData.email.includes(".")) {
+      setValidationMessage((prev) => ({
+        ...prev,
+        email: "Your email address is missing the domain",
+      }));
+    } else if (hasNumberOrSpecialChar.test(contactData.name)) {
+      setValidationMessage((prev) => ({
+        ...prev,
+        name: "special characters are not allow in the name field",
+      }));
+    } else {
+      setValidationMessage((prev) => ({
+        ...prev,
+        name: "",
+        email: "",
+      }));
+    }
+  };
+  console.log(contactData);
   return (
     <Main theme={theme}>
       <BigTitle theme={theme}>Contact</BigTitle>
@@ -94,11 +135,23 @@ const Contact = () => {
         </ContainerContactText>
         <ContactForm>
           <Label>Name</Label>
-          <Input type="text" placeholder="John Does" />
+          <Input
+            type="text"
+            placeholder="John Does"
+            name="name"
+            onChange={handleForm}
+          />
+          <ErrorMessage>{validationMessage.name}</ErrorMessage>
           <Label>Email</Label>
-          <Input type="email" placeholder="johndoes@example.com" />
+          <Input
+            name="email"
+            onChange={handleForm}
+            type="email"
+            placeholder="johndoes@example.com"
+          />
+          <ErrorMessage>{validationMessage.email}</ErrorMessage>
           <Label>Message</Label>
-          <TextArea placeholder="Type your message" />
+          <TextArea placeholder="Type your message" name="message" />
 
           <Submit theme={theme}>Send</Submit>
         </ContactForm>

@@ -17,6 +17,7 @@ function App() {
     skills: false,
     contact: false,
   });
+
   return (
     <>
       <Routes>

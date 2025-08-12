@@ -12,7 +12,7 @@ const fadeInUp = keyframes`
 `;
 
 const Main = styled.div`
-  width: 75%;
+  width: 70%;
   margin: auto;
   margin-top: 50px;
   gap: 10%;
@@ -141,6 +141,10 @@ const Box = styled.div`
     width: 50%;
   }
 `;
+const ErrorMessage = styled.p`
+  color: red;
+  font-size: 12px;
+`;
 export {
   Main,
   BigTitle,
@@ -150,4 +154,5 @@ export {
   Paragraph,
   PartWrap,
   Box,
+  ErrorMessage,
 };

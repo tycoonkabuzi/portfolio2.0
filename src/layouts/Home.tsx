@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import { useTheme } from "../contexts/ThemeContext";
+import { useState } from "react";
 const Main = styled.div`
   max-height: 100vh;
   min-height: 100vh;

@@ -7,11 +7,13 @@ import {
   Title,
 } from "../StyleReusable/base";
 import { useTheme } from "../contexts/ThemeContext";
+import { useOutletContext } from "react-router";
 const Container = styled(Main)`
   display: flex;
   align-items: center;
   margin-top: 150px;
   color: ${(props) => props.theme["--text-color"]};
+
   @media only screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
@@ -67,8 +69,9 @@ const Identification = styled.div`
 const DetailedDescription = styled.div``;
 const PartWrap = styled.div``;
 
-const Header = () => {
+const Header = ({}) => {
   const { theme } = useTheme();
+
   return (
     <Container theme={theme}>
       <QuotesHeader>
