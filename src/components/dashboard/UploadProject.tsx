@@ -152,9 +152,9 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
     }
   };
 
-  const deleteProject = async (id: string) => {
+  const deleteProject = async (id: string, filename: string | File) => {
     try {
-      await axios.delete(`http://localhost:8080/projects/${id}`);
+      await axios.delete(`http://localhost:8080/projects/${id}/${filename}`);
       setProjects((prev) => prev.filter((p) => p._id !== id));
     } catch (e) {
       console.log(e);
@@ -226,7 +226,13 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
                   </a>
                 </Td>
                 <Td>
-                  <Button onClick={() => deleteProject(p._id)}>Delete</Button>
+                  <Td>
+                    <Td>
+                      <Button onClick={() => deleteProject(p._id, p.image)}>
+                        Delete
+                      </Button>
+                    </Td>
+                  </Td>
                 </Td>
               </Tr>
             ))}
