@@ -116,6 +116,11 @@ const Portfolio = () => {
 
     moveCarousel();
   }, [count]);
+
+  useEffect(() => {
+    document.title = "Projects";
+  }, []);
+
   return (
     <MainPortfolio theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>

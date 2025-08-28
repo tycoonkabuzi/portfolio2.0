@@ -11,6 +11,7 @@ import {
   Title,
 } from "../StyleReusable/base";
 import { useTheme } from "../contexts/ThemeContext";
+import { useEffect } from "react";
 const ContainerPartLeft = styled.div`
   width: 45%;
   @media only screen and (max-width: 600px) {
@@ -42,6 +43,9 @@ const ContainerIcon = styled.div`
 `;
 const Skills = () => {
   const { theme } = useTheme();
+  useEffect(() => {
+    document.title = "Skills";
+  }, []);
   return (
     <Main theme={theme}>
       <PartWrap>

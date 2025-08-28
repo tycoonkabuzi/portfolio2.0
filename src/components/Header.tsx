@@ -8,6 +8,7 @@ import {
 } from "../StyleReusable/base";
 import { useTheme } from "../contexts/ThemeContext";
 import { useOutletContext } from "react-router";
+import { useEffect } from "react";
 const Container = styled(Main)`
   display: flex;
   align-items: center;
@@ -71,6 +72,9 @@ const PartWrap = styled.div``;
 
 const Header = ({}) => {
   const { theme } = useTheme();
+  useEffect(() => {
+    document.title = "Portoflio | Kabuzi Ntwali";
+  }, []);
 
   return (
     <Container theme={theme}>

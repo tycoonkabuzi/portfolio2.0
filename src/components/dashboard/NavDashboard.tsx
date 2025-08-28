@@ -40,7 +40,7 @@ const NavDashboard = ({ active }) => {
         </ListItem>
 
         <ListItem>
-          <Clickable isActive={active.projects} href="#">
+          <Clickable isActive={active.projects} href="/admin/projects">
             Upload Projects
           </Clickable>
         </ListItem>

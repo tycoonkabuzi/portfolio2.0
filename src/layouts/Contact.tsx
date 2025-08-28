@@ -10,7 +10,7 @@ import {
   Title,
 } from "../StyleReusable/base";
 import { useTheme } from "../contexts/ThemeContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ContainerContactText = styled.div`
   width: 30%;
@@ -75,6 +75,10 @@ const Submit = styled.button`
 
 const Contact = () => {
   const { theme } = useTheme();
+
+  useEffect(() => {
+    document.title = "Contact";
+  }, []);
   const [contactData, setContactData] = useState({
     name: "",
     email: "",
