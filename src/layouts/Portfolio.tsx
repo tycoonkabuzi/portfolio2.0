@@ -69,11 +69,12 @@ const MenuCarrousel = styled.div`
 `;
 const RoundButtons = styled.span`
   display: block;
-  background-color: white;
+  background-color: ${(props) => props.theme["--bg-color"]};
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  border: 5px solid black;
+  border: 5px solid;
+  border-color: ${(props) => props.theme["--text-color"]};
 `;
 const ContainerItem = styled.div`
   width: fit-content;
@@ -120,7 +121,6 @@ const Portfolio = () => {
   useEffect(() => {
     document.title = "Projects";
   }, []);
-
   return (
     <MainPortfolio theme={theme}>
       <BigTitle theme={theme}>Projects </BigTitle>
@@ -156,9 +156,9 @@ const Portfolio = () => {
             setCount(count - 1);
           }}
         />
-        <RoundButtons />
-        <RoundButtons />
-        <RoundButtons />
+        <RoundButtons theme={theme} />
+        <RoundButtons theme={theme} />
+        <RoundButtons theme={theme} />
         <Icon
           icon="line-md:arrow-small-right"
           width="32"
