@@ -71,7 +71,7 @@ const RoundButtons = styled.span<ThemeProps>`
   width: 10px;
   height: 10px;
   border-radius: 10px;
-  border: 5px solid ${(props) => props.theme["--bg-color"]};
+  border: 5px solid ${(props) => props.theme["--text-color"]};
 `;
 
 const NavElements = styled.ul<ThemeProps>`
