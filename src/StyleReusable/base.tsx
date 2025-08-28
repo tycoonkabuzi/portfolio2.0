@@ -1,5 +1,7 @@
 import styled, { keyframes } from "styled-components";
+import { ThemeType } from "../contexts/ThemeContext";
 
+// Fade-in animation
 const fadeInUp = keyframes`
   0% {
     opacity: 0;
@@ -11,14 +13,28 @@ const fadeInUp = keyframes`
   }
 `;
 
-const Main = styled.div`
+// Generic props for styled components using theme
+interface ThemeProps {
+  theme: ThemeType;
+}
+
+// Props for Box component
+interface BoxProps extends ThemeProps {
+  firstProject?: boolean;
+  secondProject?: boolean;
+  thirdProject?: boolean;
+}
+
+// Main container
+const Main = styled.div<ThemeProps>`
   width: 70%;
   margin: auto;
   margin-top: 50px;
   gap: 10%;
 `;
 
-const BigTitle = styled.h1`
+// Titles and texts
+const BigTitle = styled.h1<ThemeProps>`
   padding-bottom: 50px;
   animation: ${fadeInUp} 1s ease-in-out;
   color: ${(props) => props.theme["--text-color"]};
@@ -32,7 +48,8 @@ const BigTitle = styled.h1`
     font-size: 50px;
   }
 `;
-const Title = styled.h2`
+
+const Title = styled.h2<ThemeProps>`
   width: 100%;
   line-height: 40px;
   padding-bottom: 50px;
@@ -48,7 +65,8 @@ const Title = styled.h2`
     font-size: 30px;
   }
 `;
-const SubTitle = styled.p`
+
+const SubTitle = styled.p<ThemeProps>`
   font-weight: 700;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
   color: ${(props) => props.theme["--text-color"]};
@@ -63,7 +81,7 @@ const SubTitle = styled.p`
   }
 `;
 
-const SmallTitle = styled.p`
+const SmallTitle = styled.p<ThemeProps>`
   font-weight: 700;
   color: ${(props) => props.theme["--text-color"]};
   @media only screen and (max-width: 600px) {
@@ -77,7 +95,7 @@ const SmallTitle = styled.p`
   }
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.p<ThemeProps>`
   margin-bottom: 20px;
   animation: ${fadeInUp} 1s ease-in-out 0.3s;
   color: ${(props) => props.theme["--text-color"]};
@@ -92,7 +110,8 @@ const Paragraph = styled.p`
   }
 `;
 
-const PartWrap = styled.div`
+// Layout wrappers
+const PartWrap = styled.div<ThemeProps>`
   display: flex;
   gap: 10%;
   @media only screen and (max-width: 600px) {
@@ -107,7 +126,8 @@ const PartWrap = styled.div`
     flex-direction: row;
   }
 `;
-const Box = styled.div`
+
+const Box = styled.div<BoxProps>`
   animation: ${fadeInUp} 1s ease-in-out
     ${(props) =>
       props.firstProject
@@ -125,12 +145,14 @@ const Box = styled.div`
   border-radius: 20px;
   transition: rotate 0.3s ease-in-out;
   margin-bottom: 40px;
+
   &:hover {
     rotate: -5deg;
     color: ${(props) => props.theme["--text-color"]};
     background-color: ${(props) => props.theme["--bg-color"]};
     cursor: pointer;
   }
+
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
@@ -141,10 +163,12 @@ const Box = styled.div`
     width: 50%;
   }
 `;
-const ErrorMessage = styled.p`
+
+const ErrorMessage = styled.p<ThemeProps>`
   color: red;
   font-size: 12px;
 `;
+
 export {
   Main,
   BigTitle,

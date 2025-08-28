@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   BigTitle,
   ErrorMessage,
@@ -12,6 +12,7 @@ import {
 import { useTheme } from "../contexts/ThemeContext";
 import { useEffect, useState } from "react";
 
+// Styled components
 const ContainerContactText = styled.div`
   width: 30%;
   @media only screen and (max-width: 600px) {
@@ -21,6 +22,7 @@ const ContainerContactText = styled.div`
     width: 80%;
   }
 `;
+
 const ContactForm = styled.form`
   display: block;
   width: 40%;
@@ -38,9 +40,11 @@ const ContactForm = styled.form`
     width: 80%;
   }
 `;
+
 const Label = styled.label`
   font-size: 14px;
 `;
+
 const Input = styled.input`
   width: 100%;
   height: 25px;
@@ -48,10 +52,12 @@ const Input = styled.input`
   border: 1px solid #cfcfcf;
   padding-left: 10px;
   margin-bottom: 10px;
+
   @media only screen and (max-width: 600px) {
     height: 40px;
   }
 `;
+
 const TextArea = styled.textarea`
   width: 100%;
   height: 100px;
@@ -61,9 +67,10 @@ const TextArea = styled.textarea`
   padding-top: 10px;
   margin-bottom: 20px;
 `;
-const Submit = styled.button`
+
+const Submit = styled.button<{ theme: any }>`
   background-color: ${(props) => props.theme["--btn-color"]};
-  padding: 10px 40px 10px 40px;
+  padding: 10px 40px;
   border: none;
   border-radius: 10px;
   color: white;
@@ -73,89 +80,122 @@ const Submit = styled.button`
   }
 `;
 
+// Types
+interface ContactData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface ValidationMessage {
+  name: string;
+  email: string;
+}
+
 const Contact = () => {
   const { theme } = useTheme();
+
+  const [contactData, setContactData] = useState<ContactData>({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [validationMessage, setValidationMessage] = useState<ValidationMessage>(
+    {
+      name: "",
+      email: "",
+    }
+  );
 
   useEffect(() => {
     document.title = "Contact";
   }, []);
-  const [contactData, setContactData] = useState({
-    name: "",
-    email: "",
-  });
-  const [validationMessage, setValidationMessage] = useState({
-    name: "",
-    email: "",
-  });
 
-  const handleForm = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    const hasNumberOrSpecialChar = /[^a-zA-ZÀ-ž\s]/;
+  const handleForm = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
     setContactData((prev) => ({ ...prev, [name]: value }));
 
-    if (contactData.email !== "" && !contactData.email.includes("@")) {
-      setValidationMessage((prev) => ({
-        ...prev,
-        email: "Your email should contain @",
-      }));
-      console.log();
-    } else if (contactData.email !== "" && !contactData.email.includes(".")) {
-      setValidationMessage((prev) => ({
-        ...prev,
-        email: "Your email address is missing the domain",
-      }));
-    } else if (hasNumberOrSpecialChar.test(contactData.name)) {
-      setValidationMessage((prev) => ({
-        ...prev,
-        name: "special characters are not allow in the name field",
-      }));
-    } else {
-      setValidationMessage((prev) => ({
-        ...prev,
-        name: "",
-        email: "",
-      }));
+    const hasNumberOrSpecialChar = /[^a-zA-ZÀ-ž\s]/;
+
+    if (name === "email") {
+      if (value && !value.includes("@")) {
+        setValidationMessage((prev) => ({
+          ...prev,
+          email: "Your email should contain @",
+        }));
+      } else if (value && !value.includes(".")) {
+        setValidationMessage((prev) => ({
+          ...prev,
+          email: "Your email address is missing the domain",
+        }));
+      } else {
+        setValidationMessage((prev) => ({ ...prev, email: "" }));
+      }
+    }
+
+    if (name === "name") {
+      if (hasNumberOrSpecialChar.test(value)) {
+        setValidationMessage((prev) => ({
+          ...prev,
+          name: "Special characters are not allowed in the name field",
+        }));
+      } else {
+        setValidationMessage((prev) => ({ ...prev, name: "" }));
+      }
     }
   };
-  console.log(contactData);
+
   return (
     <Main theme={theme}>
       <BigTitle theme={theme}>Contact</BigTitle>
       <PartWrap>
         <ContainerContactText>
-          <Title theme={theme}>If you wanna reach out to me </Title>
+          <Title theme={theme}>If you want to reach out to me</Title>
           <SubTitle theme={theme}>
             “Alone we can do so little; together we can do so much.”
           </SubTitle>
-
           <Paragraph theme={theme}>
             I’m always open to new opportunities and meaningful conversations.
-            Whether you’d like to discuss a project, explore an idea, or to hire
-            me — feel free to reach out. Let’s build something impactful
-            together.
+            Whether you’d like to discuss a project, explore an idea, or hire me
+            — feel free to reach out. Let’s build something impactful together.
           </Paragraph>
           <SmallTitle theme={theme}> — Helen Keller</SmallTitle>
         </ContainerContactText>
+
         <ContactForm>
-          <Label>Name</Label>
+          <Label htmlFor="name">Name</Label>
           <Input
-            type="text"
-            placeholder="John Does"
+            id="name"
             name="name"
+            type="text"
+            placeholder="John Doe"
+            value={contactData.name}
             onChange={handleForm}
           />
-          <ErrorMessage>{validationMessage.name}</ErrorMessage>
-          <Label>Email</Label>
+          <ErrorMessage theme={theme}>{validationMessage.name}</ErrorMessage>
+
+          <Label htmlFor="email">Email</Label>
           <Input
+            id="email"
             name="email"
-            onChange={handleForm}
             type="email"
-            placeholder="johndoes@example.com"
+            placeholder="johndoe@example.com"
+            value={contactData.email}
+            onChange={handleForm}
           />
-          <ErrorMessage>{validationMessage.email}</ErrorMessage>
-          <Label>Message</Label>
-          <TextArea placeholder="Type your message" name="message" />
+          <ErrorMessage theme={theme}>{validationMessage.email}</ErrorMessage>
+
+          <Label htmlFor="message">Message</Label>
+          <TextArea
+            id="message"
+            name="message"
+            placeholder="Type your message"
+            value={contactData.message}
+            onChange={handleForm}
+          />
 
           <Submit theme={theme}>Send</Submit>
         </ContactForm>
@@ -163,4 +203,5 @@ const Contact = () => {
     </Main>
   );
 };
+
 export default Contact;

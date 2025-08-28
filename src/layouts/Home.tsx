@@ -2,11 +2,19 @@ import { Outlet } from "react-router";
 import Nav from "../components/Nav";
 import styled from "styled-components";
 import { useTheme } from "../contexts/ThemeContext";
-const Main = styled.div`
+import { ThemeType } from "../contexts/ThemeContext"; // import the type
+
+// Define props type for styled-component
+interface MainProps {
+  theme: ThemeType;
+}
+
+const Main = styled.div<MainProps>`
   max-height: 100vh;
   min-height: 100vh;
   overflow-y: hidden;
   background-color: ${(props) => props.theme["--bg-color"]};
+
   @media only screen and (max-width: 600px) {
     overflow: scroll;
   }
@@ -14,6 +22,7 @@ const Main = styled.div`
     overflow: scroll;
   }
 `;
+
 const Home = () => {
   const { theme } = useTheme();
 
@@ -24,4 +33,5 @@ const Home = () => {
     </Main>
   );
 };
+
 export default Home;

@@ -9,11 +9,12 @@ import Contact from "./layouts/Contact";
 import { useState } from "react";
 import UploadProject from "./components/dashboard/UploadProject";
 import Dashboard from "./layouts/Dashboard";
+import { ActiveState } from "./types/activeState";
 
 function App() {
-  const [active, setActive] = useState({
-    home: false,
-    project: true,
+  const [active, setActive] = useState<ActiveState>({
+    home: true,
+    projects: false,
     skills: false,
     contact: false,
   });

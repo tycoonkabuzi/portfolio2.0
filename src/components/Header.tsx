@@ -6,10 +6,15 @@ import {
   SubTitle,
   Title,
 } from "../StyleReusable/base";
-import { useTheme } from "../contexts/ThemeContext";
-import { useOutletContext } from "react-router";
+import { useTheme, ThemeType } from "../contexts/ThemeContext";
 import { useEffect } from "react";
-const Container = styled(Main)`
+
+// Props type for styled-components using theme
+interface ThemeProps {
+  theme: ThemeType;
+}
+
+const Container = styled(Main)<ThemeProps>`
   display: flex;
   align-items: center;
   margin-top: 150px;
@@ -30,6 +35,7 @@ const Container = styled(Main)`
     flex-direction: row;
   }
 `;
+
 const QuotesHeader = styled.div`
   @media only screen and (max-width: 600px) {
     width: 100%;
@@ -70,10 +76,11 @@ const Identification = styled.div`
 const DetailedDescription = styled.div``;
 const PartWrap = styled.div``;
 
-const Header = ({}) => {
+const Header = () => {
   const { theme } = useTheme();
+
   useEffect(() => {
-    document.title = "Portoflio | Kabuzi Ntwali";
+    document.title = "Portfolio | Kabuzi Ntwali";
   }, []);
 
   return (
@@ -95,7 +102,7 @@ const Header = ({}) => {
           </PartWrap>
 
           <PartWrap>
-            <Paragraph>Experience </Paragraph>
+            <Paragraph>Experience</Paragraph>
             <SubTitle>3 years</SubTitle>
           </PartWrap>
         </Identification>
@@ -108,7 +115,7 @@ const Header = ({}) => {
             make ideas a reality is the biggest reward for me.
           </Paragraph>
           <Paragraph>
-            This portfolio includes some of the projects I have worked on. even
+            This portfolio includes some of the projects I have worked on. Even
             though it does not contain all of my work, it gives a general idea
             of what I've done. Enjoy exploring it!
           </Paragraph>
@@ -117,4 +124,5 @@ const Header = ({}) => {
     </Container>
   );
 };
+
 export default Header;

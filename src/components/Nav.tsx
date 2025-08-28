@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router";
-import { useTheme } from "../contexts/ThemeContext";
+import { Link, useLocation, useNavigate } from "react-router";
+import { useTheme, ThemeType } from "../contexts/ThemeContext";
 
-const Main = styled.div<{ isAnimated?: boolean }>`
+// Props type for styled components using theme
+interface ThemeProps {
+  theme: ThemeType;
+  isAnimated?: boolean;
+  second?: boolean;
+}
+
+const Main = styled.div<ThemeProps>`
   padding-top: 50px;
   width: 75%;
   margin: auto;
@@ -14,38 +21,38 @@ const Main = styled.div<{ isAnimated?: boolean }>`
   background-color: ${(props) => props.theme["--bg-color"]};
   color: ${(props) => props.theme["--text-color"]};
 `;
-const HamburgerMenu = styled.div`
+
+const HamburgerMenu = styled.div<ThemeProps>`
   display: flex;
   flex-direction: column;
   gap: 7px;
 `;
-const LongLineHamburgerMenu = styled.span<{
-  isAnimated?: boolean;
-  second?: boolean;
-}>`
+
+const LongLineHamburgerMenu = styled.span<ThemeProps>`
   display: block;
   background-color: ${(props) => props.theme["--bg-color-nav-span"]};
-
   width: 25px;
   height: 3px;
   transition: 0.3s ease-in-out;
-  ${(props) => (props.isAnimated ? ` rotate: 45deg; margin-top:10px; ` : ``)}
+  ${(props) => (props.isAnimated ? `rotate: 45deg; margin-top:10px;` : ``)}
   ${(props) =>
-    props.second && props.isAnimated ? "rotate:-45deg; margin-top:-10px " : ""}
+    props.second && props.isAnimated ? "rotate:-45deg; margin-top:-10px;" : ""}
 `;
-const ShortLineHamburgerMenu = styled.span<{ isAnimated?: boolean }>`
+
+const ShortLineHamburgerMenu = styled.span<ThemeProps>`
   display: block;
   background-color: ${(props) => props.theme["--bg-color-nav-span"]};
   width: 15px;
   height: 3px;
-
   ${(props) => (props.isAnimated ? `display: none;` : ``)}
 `;
+
 const ContainerTopNav = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const MenuCarrousel = styled.div<{ isAnimated?: boolean }>`
+
+const MenuCarrousel = styled.div<ThemeProps>`
   ${(props) => (props.isAnimated ? "display:none;" : "display:flex;")}
   flex-direction: column;
   gap: 10px;
@@ -58,19 +65,22 @@ const MenuCarrousel = styled.div<{ isAnimated?: boolean }>`
     display: none;
   }
 `;
-const RoundButtons = styled.span`
+
+const RoundButtons = styled.span<ThemeProps>`
   display: block;
   width: 10px;
   height: 10px;
   border-radius: 10px;
   border: 5px solid ${(props) => props.theme["--bg-color"]};
 `;
-const NavElements = styled.ul<{ isAnimated?: boolean }>`
+
+const NavElements = styled.ul<ThemeProps>`
   margin-top: 100px;
   opacity: ${(props) => (props.isAnimated ? "1" : "0")};
   visibility: ${(props) => (props.isAnimated ? "visible" : "hidden")};
   transition: opacity 0.3s ease-in-out 0.3s, visibility 0.3s ease-in-out;
 `;
+
 const Item = styled.li`
   font-size: 50px;
   list-style: none;
@@ -81,75 +91,61 @@ const Item = styled.li`
   }
 `;
 
-const StyledLink = styled(Link)<{ isAnimated?: boolean }>`
+const StyledLink = styled(Link)<ThemeProps>`
   text-decoration: none;
-  color: inherit;
   color: ${(props) => props.theme["--text-color"]};
 `;
+
 const Nav = () => {
   const location = useLocation();
   const [isAnimated, setIsAnimated] = useState(false);
   const { isDarkMode, theme, toggleTheme } = useTheme();
-
+  const navigate = useNavigate();
   const pages = ["/", "/portfolio", "/skills", "/contact"];
+
   const animatedHamburgerMenu = () => {
     setIsAnimated(!isAnimated);
   };
-  const navigate = useNavigate();
 
   return (
     <Main isAnimated={isAnimated} theme={theme}>
       <ContainerTopNav>
         <HamburgerMenu onClick={animatedHamburgerMenu} theme={theme}>
           <LongLineHamburgerMenu isAnimated={isAnimated} theme={theme} />
-          <LongLineHamburgerMenu
-            second={true}
-            isAnimated={isAnimated}
-            theme={theme}
-          />
+          <LongLineHamburgerMenu second isAnimated={isAnimated} theme={theme} />
           <ShortLineHamburgerMenu isAnimated={isAnimated} theme={theme} />
         </HamburgerMenu>
         <Icon
           icon={
-            isDarkMode == false
-              ? "line-md:moon-filled-alt-to-sunny-filled-loop-transition"
-              : "line-md:moon-alt-loop"
+            isDarkMode
+              ? "line-md:moon-alt-loop"
+              : "line-md:moon-filled-alt-to-sunny-filled-loop-transition"
           }
           width="32"
           height="32"
           onClick={toggleTheme}
         />
       </ContainerTopNav>
-      <NavElements isAnimated={isAnimated}>
-        <StyledLink to="/" onClick={animatedHamburgerMenu} theme={theme}>
-          <Item>Home</Item>
-        </StyledLink>
-        <StyledLink
-          to="/portfolio"
-          isAnimated={isAnimated}
-          onClick={animatedHamburgerMenu}
-          theme={theme}
-        >
-          <Item>Projects</Item>
-        </StyledLink>
-        <StyledLink
-          to="/skills"
-          isAnimated={isAnimated}
-          onClick={animatedHamburgerMenu}
-          theme={theme}
-        >
-          <Item>Skills</Item>
-        </StyledLink>
-        <StyledLink
-          to="/contact"
-          isAnimated={isAnimated}
-          onClick={animatedHamburgerMenu}
-          theme={theme}
-        >
-          <Item>Contact</Item>
-        </StyledLink>
+
+      <NavElements isAnimated={isAnimated} theme={theme}>
+        {pages.map((path, index) => (
+          <StyledLink
+            key={index}
+            to={path}
+            onClick={animatedHamburgerMenu}
+            isAnimated={isAnimated}
+            theme={theme}
+          >
+            <Item>
+              {path === "/"
+                ? "Home"
+                : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+            </Item>
+          </StyledLink>
+        ))}
       </NavElements>
-      <MenuCarrousel isAnimated={isAnimated}>
+
+      <MenuCarrousel isAnimated={isAnimated} theme={theme}>
         <Icon
           icon="line-md:arrow-small-up"
           width="32"
@@ -157,60 +153,30 @@ const Nav = () => {
           onClick={() => {
             const currentIndex = pages.indexOf(location.pathname);
             const previousPage = pages[currentIndex - 1];
-
-            if (previousPage) {
-              navigate(previousPage);
-            }
+            if (previousPage) navigate(previousPage);
           }}
         />
-        <RoundButtons
-          onClick={() => {
-            navigate("/");
-          }}
-          style={{
-            backgroundColor: location.pathname === "/" ? "red" : "",
-          }}
-        />
-        <RoundButtons
-          onClick={() => {
-            navigate("/portfolio");
-          }}
-          style={{
-            backgroundColor: location.pathname === "/portfolio" ? "red" : "",
-          }}
-        />
-        <RoundButtons
-          onClick={() => {
-            navigate("/skills");
-          }}
-          style={{
-            backgroundColor: location.pathname === "/skills" ? "red" : "",
-          }}
-        />
-        <RoundButtons
-          onClick={() => {
-            navigate("/contact");
-          }}
-          style={{
-            backgroundColor: location.pathname === "/contact" ? "red" : "",
-          }}
-        />
-
+        {pages.map((page, idx) => (
+          <RoundButtons
+            key={idx}
+            onClick={() => navigate(page)}
+            theme={theme}
+            style={{ backgroundColor: location.pathname === page ? "red" : "" }}
+          />
+        ))}
         <Icon
           icon="line-md:arrow-small-down"
           width="32"
           height="32"
           onClick={() => {
             const currentIndex = pages.indexOf(location.pathname);
-            const previousPage = pages[currentIndex + 1];
-
-            if (previousPage) {
-              navigate(previousPage);
-            }
+            const nextPage = pages[currentIndex + 1];
+            if (nextPage) navigate(nextPage);
           }}
         />
       </MenuCarrousel>
     </Main>
   );
 };
+
 export default Nav;

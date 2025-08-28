@@ -2,7 +2,7 @@ import { createContext, useState, ReactNode, useContext } from "react";
 import { lightTheme, darkTheme } from "../StyleReusable/baseColor";
 
 // Define the type for your theme (whatever structure lightTheme/darkTheme have)
-type ThemeType = typeof lightTheme;
+export type ThemeType = typeof lightTheme;
 
 // Define the context value type
 interface ThemeContextType {
