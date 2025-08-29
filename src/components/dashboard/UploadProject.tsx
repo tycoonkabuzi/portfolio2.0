@@ -159,9 +159,14 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
 
   const deleteProject = async (id: string, filename: string | File) => {
     try {
+      const filenameStr =
+        typeof filename === "string" ? filename : filename.name;
+      const encodedFilename = encodeURIComponent(filenameStr);
+
       await axios.delete(
-        `https://portfoliobackend-s4al.onrender.com/${id}/${filename}`
+        `https://portfoliobackend-s4al.onrender.com/projects/${id}/${encodedFilename}`
       );
+
       setProjects((prev) => prev.filter((p) => p._id !== id));
     } catch (e) {
       console.log(e);
