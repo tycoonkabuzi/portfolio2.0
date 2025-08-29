@@ -45,7 +45,9 @@ const ContainerImage = styled.div`
 `;
 
 const BoxProject = styled(Box)<ThemeProps>`
-  flex: 0 0 10%;
+  flex: 0 0 33.33%;
+  max-width: 33.33%;
+  box-sizing: border-box;
 `;
 
 const Image = styled.img`
