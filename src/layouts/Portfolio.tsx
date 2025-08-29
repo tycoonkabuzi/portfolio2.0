@@ -5,8 +5,8 @@ import {
   Box,
   Main,
   Paragraph,
-  SmallTitle,
   SubTitle,
+  SmallTitle,
 } from "../StyleReusable/base";
 import { useTheme, ThemeType } from "../contexts/ThemeContext";
 import { useEffect, useRef, useState } from "react";
@@ -18,36 +18,35 @@ interface ThemeProps {
   theme: ThemeType;
 }
 
+// Styled components
 const MainPortfolio = styled(Main)<ThemeProps>``;
 
 const ContainerProjects = styled.div`
-  display: flex;
-  gap: 3%;
-  align-items: center;
   overflow: hidden;
-
-  @media only screen and (max-width: 600px) {
-    flex-direction: column;
-    width: 90%;
-    padding: 20px;
-    margin: auto;
-  }
-  @media only screen and (min-width: 600px) {
-    width: 95%;
-    flex-direction: column;
-  }
-`;
-
-const ContainerImage = styled.div`
   width: 100%;
   margin: auto;
-  padding-bottom: 20px;
+`;
+
+const ContainerItem = styled.div`
+  display: flex;
+  gap: 2%;
+  transition: transform 0.4s ease-in-out;
 `;
 
 const BoxProject = styled(Box)<ThemeProps>`
-  flex: 0 0 calc(33.33% - 10px); // subtract gap to fit 3 cards
-  max-width: calc(33.33% - 10px);
+  flex: 0 0 calc(33.33% - 1.33%);
+  max-width: calc(33.33% - 1.33%);
   box-sizing: border-box;
+
+  @media only screen and (max-width: 900px) {
+    flex: 0 0 calc(50% - 1%);
+    max-width: calc(50% - 1%);
+  }
+
+  @media only screen and (max-width: 600px) {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
 `;
 
 const Image = styled.img`
@@ -67,11 +66,8 @@ const ProjectNumber = styled.div`
 const MenuCarrousel = styled.div`
   display: flex;
   gap: 10px;
-  width: 15%;
-  align-items: center;
-  right: 11%;
-  margin: auto;
-  margin-top: 40px;
+  justify-content: center;
+  margin-top: 20px;
 `;
 
 const RoundButtons = styled.span<ThemeProps>`
@@ -79,17 +75,8 @@ const RoundButtons = styled.span<ThemeProps>`
   background-color: ${(props) => props.theme["--bg-color"]};
   width: 10px;
   height: 10px;
-  border-radius: 10px;
-  border: 5px solid;
-  border-color: ${(props) => props.theme["--text-color"]};
-`;
-
-const ContainerItem = styled.div`
-  width: fit-content;
-  display: flex;
-  margin: auto;
-  gap: 1%;
-  transition: transform 0.3s ease;
+  border-radius: 50%;
+  border: 2px solid ${(props) => props.theme["--text-color"]};
 `;
 
 const LinkElement = styled(Link)`
@@ -101,9 +88,10 @@ const Portfolio = () => {
 
   const [projects, setProjects] = useState<any[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemWidth = 100;
   const [count, setCount] = useState(0);
+  const [visibleCards, setVisibleCards] = useState(3);
 
+  // Fetch projects from backend
   useEffect(() => {
     const getAllProjects = async () => {
       try {
@@ -118,14 +106,40 @@ const Portfolio = () => {
     getAllProjects();
   }, []);
 
+  // Adjust visibleCards based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 600) setVisibleCards(1);
+      else if (window.innerWidth <= 900) setVisibleCards(2);
+      else setVisibleCards(3);
+    };
+
+    handleResize(); // initialize
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Slide container
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.style.transition = "transform 0.3s ease-in-out";
+      const containerWidth = containerRef.current.offsetWidth;
+      const cardWidth = containerRef.current.firstChild
+        ? (containerRef.current.firstChild as HTMLElement).offsetWidth +
+          0.02 * containerWidth // include gap approx
+        : 0;
       containerRef.current.style.transform = `translateX(-${
-        count * itemWidth
+        count * cardWidth
       }px)`;
     }
-  }, [count, itemWidth]);
+  }, [count, visibleCards, projects]);
+
+  const next = () => {
+    if (count < projects.length - visibleCards) setCount(count + 1);
+  };
+
+  const prev = () => {
+    if (count > 0) setCount(count - 1);
+  };
 
   useEffect(() => {
     document.title = "Projects";
@@ -143,11 +157,9 @@ const Portfolio = () => {
           {projects.map((project, index) => (
             <BoxProject theme={theme} key={index}>
               <LinkElement to={`${project.link}`}>
-                <ContainerImage>
-                  <Image
-                    src={`https://portfoliobackend-s4al.onrender.com/uploads/${project.image}`}
-                  />
-                </ContainerImage>
+                <Image
+                  src={`https://portfoliobackend-s4al.onrender.com/uploads/${project.image}`}
+                />
                 <SubTitle theme={theme}>{project.title}</SubTitle>
                 <Paragraph theme={theme}>{project.description}</Paragraph>
                 <ContainerCategoryProject>
@@ -167,16 +179,18 @@ const Portfolio = () => {
           icon="line-md:arrow-small-left"
           width="32"
           height="32"
-          onClick={() => setCount(count - 1)}
+          onClick={prev}
         />
-        <RoundButtons theme={theme} />
-        <RoundButtons theme={theme} />
-        <RoundButtons theme={theme} />
+        {Array.from({ length: Math.ceil(projects.length / visibleCards) }).map(
+          (_, idx) => (
+            <RoundButtons key={idx} theme={theme} />
+          )
+        )}
         <Icon
           icon="line-md:arrow-small-right"
           width="32"
           height="32"
-          onClick={() => setCount(count + 1)}
+          onClick={next}
         />
       </MenuCarrousel>
     </MainPortfolio>
