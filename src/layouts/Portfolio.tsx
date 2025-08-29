@@ -105,7 +105,9 @@ const Portfolio = () => {
   useEffect(() => {
     const getAllProjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/projects/");
+        const response = await axios.get(
+          "https://portfoliobackend-s4al.onrender.com/projects/"
+        );
         setProjects(response.data);
       } catch (error) {
         console.log(error);
@@ -136,7 +138,7 @@ const Portfolio = () => {
               <LinkElement to={`${project.link}`}>
                 <ContainerImage>
                   <Image
-                    src={`http://localhost:8080/uploads/${project.image}`}
+                    src={`https://portfoliobackend-s4al.onrender.com/uploads/${project.image}`}
                   />
                 </ContainerImage>
                 <SubTitle theme={theme}>{project.title}</SubTitle>

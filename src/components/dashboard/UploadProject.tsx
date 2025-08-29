@@ -143,9 +143,14 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
     });
 
     try {
-      await axios.post("http://localhost:8080/projects", data);
+      await axios.post(
+        "https://portfoliobackend-s4al.onrender.com/projects",
+        data
+      );
       // Optionally: reload projects after upload
-      const res = await axios.get("http://localhost:8080/projects");
+      const res = await axios.get(
+        "https://portfoliobackend-s4al.onrender.com/projects"
+      );
       setProjects(res.data);
     } catch (e) {
       console.log(e);
@@ -154,7 +159,9 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
 
   const deleteProject = async (id: string, filename: string | File) => {
     try {
-      await axios.delete(`http://localhost:8080/projects/${id}/${filename}`);
+      await axios.delete(
+        `https://portfoliobackend-s4al.onrender.com/${id}/${filename}`
+      );
       setProjects((prev) => prev.filter((p) => p._id !== id));
     } catch (e) {
       console.log(e);
@@ -163,7 +170,7 @@ const UploadProject = ({ setActive }: UploadProjectProps) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/projects")
+      .get("https://portfoliobackend-s4al.onrender.com/projects")
       .then((res) => setProjects(res.data));
   }, []);
 
