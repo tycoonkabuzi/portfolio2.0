@@ -120,11 +120,12 @@ const Portfolio = () => {
 
   useEffect(() => {
     if (containerRef.current) {
+      containerRef.current.style.transition = "transform 0.3s ease-in-out";
       containerRef.current.style.transform = `translateX(-${
         count * itemWidth
-      }%)`;
+      }px)`;
     }
-  }, [count]);
+  }, [count, itemWidth]);
 
   useEffect(() => {
     document.title = "Projects";
