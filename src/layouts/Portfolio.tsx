@@ -45,8 +45,8 @@ const ContainerImage = styled.div`
 `;
 
 const BoxProject = styled(Box)<ThemeProps>`
-  flex: 0 0 33.33%;
-  max-width: 33.33%;
+  flex: 0 0 calc(33.33% - 10px); // subtract gap to fit 3 cards
+  max-width: calc(33.33% - 10px);
   box-sizing: border-box;
 `;
 
