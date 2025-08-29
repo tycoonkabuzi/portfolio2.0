@@ -131,6 +131,10 @@ const Portfolio = () => {
   return (
     <MainPortfolio theme={theme}>
       <BigTitle theme={theme}>Projects</BigTitle>
+      <p>
+        Here: <a href="https://github.com/tycoonkabuzi"> Access my GitHub</a>{" "}
+        and below a few demo projects
+      </p>
       <ContainerProjects>
         <ContainerItem ref={containerRef}>
           {projects.map((project, index) => (
