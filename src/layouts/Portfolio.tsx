@@ -45,7 +45,7 @@ const ContainerImage = styled.div`
 `;
 
 const BoxProject = styled(Box)<ThemeProps>`
-  flex: 0 0 28.5%;
+  flex: 0 0 10%;
 `;
 
 const Image = styled.img`
